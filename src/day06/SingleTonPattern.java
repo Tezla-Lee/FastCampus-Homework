@@ -1,4 +1,4 @@
-package day6;
+package day06;
 
 /**
  * 싱글톤 패턴 구현하기

@@ -1,4 +1,4 @@
-package day9;
+package day09;
 
 class IntArrayList implements List {
     int [] array;
@@ -76,29 +76,29 @@ class IntArrayList implements List {
     }
 }
 
-//class IntArrayListTest {
-//    public static void main(String[] args) {
-//        IntArrayList list = new IntArrayList(10);
-//        for (int i = 0; i < 15; i ++) {
-//            list.append(i);
-//        }
-//        for (int i = 0; i < 5; i ++) {
-//            list.prepend(0);
-//        }
-//        for (int i = 0; i < 10; i ++) {
-//            list.remove(0);
-//        }
-//        for (int i = 0; i < 10; i ++) {
-//            list.insert(0,i);
-//        }
-//
-//        for (int i = 0; i < list.listLength; i++) {
-//            System.out.printf("%d ", list.array[i]);
-//        }
-//
-//        System.out.println();
-//        list.length();
-//        System.out.println("capacity : " + list.capacity);
-//        System.out.println(list.get(3));
-//    }
-//}
+class IntArrayListTest {
+    public static void main(String[] args) {
+        IntArrayList list = new IntArrayList(10);
+        for (int i = 0; i < 15; i ++) {
+            list.append(i);
+        }
+        for (int i = 0; i < 5; i ++) {
+            list.prepend(0);
+        }
+        for (int i = 0; i < 10; i ++) {
+            list.remove(0);
+        }
+        for (int i = 0; i < 10; i ++) {
+            list.insert(0,i);
+        }
+
+        for (int i = 0; i < list.listLength; i++) {
+            System.out.printf("%d ", list.array[i]);
+        }
+
+        System.out.println();
+        list.length();
+        System.out.println("capacity : " + list.capacity);
+        System.out.println(list.get(3));
+    }
+}

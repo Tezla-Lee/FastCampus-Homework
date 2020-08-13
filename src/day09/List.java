@@ -1,4 +1,4 @@
-package day9;
+package day09;
 
 /**
  * List 인터페이스를 구현하여 IntArrayList 클래스를 완성하시오.
@@ -24,3 +24,4 @@ interface List {
     public int get(int index);
     public void length();
 }
+

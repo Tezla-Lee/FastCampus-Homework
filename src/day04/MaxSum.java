@@ -1,4 +1,4 @@
-package day4;
+package day04;
 
 /**
  * 배열의 연속합 최대 구하기

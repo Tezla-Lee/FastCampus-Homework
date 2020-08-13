@@ -1,4 +1,4 @@
-package day4;
+package day04;
 
 /**
  * 행렬의 곱 계산하기

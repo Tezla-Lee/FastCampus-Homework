@@ -1,4 +1,4 @@
-package day6;
+package day06;
 
 /**
  * 3차원 벡터 클래스 구현하기
