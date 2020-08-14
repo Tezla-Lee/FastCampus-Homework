@@ -111,12 +111,18 @@ class ArrayList<T> implements List<T> {
 
 
 public class GenericList {
+    public static void printList(ArrayList<Object> list) {
+        for (int i = 0; i < list.length(); i++) {
+            System.out.print(list.get(i) + " ");
+        }
+        System.out.println();
+    }
     public static void main(String[] args) {
         ArrayList<Object> list = new ArrayList<>(10);
         for (int i = 0; i < 20; i++) {
             list.append(i);
         }
-        list.printList(list);
+        printList(list);
 
         list.remove(5);
         list.printList(list);
@@ -124,13 +130,12 @@ public class GenericList {
         list.prepend(1);
         list.prepend(2);
         list.prepend(3);
-        list.printList(list);
+        printList(list);
 
         list.insert(5, "abc");
         list.prepend("abcd");
         list.prepend('a');
-        list.printList(list);
-//        list.prepend("abc");
+        printList(list);
         System.out.println();
 
 
@@ -139,6 +144,6 @@ public class GenericList {
             char ch = (char) (i + 65);
             listChar.append(ch);
         }
-        listChar.printList(listChar);
+        printList(listChar);
     }
 }
