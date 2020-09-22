@@ -117,6 +117,7 @@ public class GenericList {
         }
         System.out.println();
     }
+
     public static void main(String[] args) {
         ArrayList<Object> list = new ArrayList<>(10);
         for (int i = 0; i < 20; i++) {
@@ -136,6 +137,7 @@ public class GenericList {
         list.prepend("abcd");
         list.prepend('a');
         printList(list);
+        System.out.println(list.get(7));
         System.out.println();
 
 
