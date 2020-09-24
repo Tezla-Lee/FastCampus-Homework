@@ -2,6 +2,7 @@ package day13;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntUnaryOperator;
 
 /**
  * 열거형 타입과 함수형 프로그래밍을 이용하여 플레이어의 공격력을 계산하는 알고리즘을 구현하시오.
@@ -20,73 +21,63 @@ import java.util.List;
 enum Weapon {
     BARE_HANDS(5), DAGGER(40), LONG_SWORD(100), DRAGON_SLAYER(250);
 
-    private int attack;
+    private int damage;
 
-    Weapon(int attack) {
-        this.attack = attack;
+    Weapon(int damage) {
+        this.damage = damage;
     }
 
     int getWeaponAttack() {
-        return attack;
+        return damage;
     }
 
 }
 
 enum Item {
-    BLACK_POTION(0.1, 0, 0), WHITE_POTION(0, 200, 0), MUSHROOM(0, 0, 20);
+    MUSHROOM(value -> value + 20, 0), BLACK_POTION(value -> (int) (value * 1.1), 1),WHITE_POTION(value -> value + 200, 2);
 
-    private double addAttackPercent;
-    private int finalAddAttack;
-    private int addWeaponAttack;
+    private final IntUnaryOperator op;
+    private final int priority;
 
-    Item(double addAttackPercent, int finalAddAttack, int addWeaponAttack) {
-        this.addAttackPercent = addAttackPercent;
-        this.finalAddAttack = finalAddAttack;
-        this.addWeaponAttack = addWeaponAttack;
+    Item(IntUnaryOperator op, int priority) {
+        this.op = op;
+        this. priority = priority;
     }
 
-    public double getAddAttackPercent() {
-        return addAttackPercent;
+    public IntUnaryOperator getOp() {
+        return op;
     }
 
-    public int getFinalAddAttack() {
-        return finalAddAttack;
+    public int getPriority() {
+        return priority;
     }
-
-    public int getAddWeaponAttack() {
-        return addWeaponAttack;
-    }
-
 }
 
 class Player {
     private String name;
-    private Weapon currentWeapon;
+    private Weapon weapon = Weapon.BARE_HANDS;
     private List<Item> usingItems = new ArrayList<>();
-    private double attack = 0;
 
     public Player(String name) {
         this.name = name;
     }
 
     void takeWeapon(Weapon weapon) {
-        currentWeapon = weapon;
+        this.weapon = weapon;
         System.out.println(this.name + "이(가) " + weapon + " 을 장착했습니다.");
         System.out.println();
-        this.attack += weapon.getWeaponAttack();
     }
 
     void useItem(Item item) {
         usingItems.add(item);
-        System.out.println(this.name + "이(가) " +item + " 을 사용했습니다.");
+        System.out.println(this.name + "이(가) " + item + " 을 사용했습니다.");
         System.out.println();
-        this.attack = (attack + item.getAddWeaponAttack()) * (1 + item.getAddAttackPercent()) + item.getFinalAddAttack();
     }
 
     void endItemEffect(Item item) {
         if (usingItems.contains(item)) {
             usingItems.remove(item);
-            System.out.println(this.name + "의 " +item + " 의 지속시간이 끝났습니다.");
+            System.out.println(this.name + "의 " + item + " 의 지속시간이 끝났습니다.");
             System.out.println();
         } else {
             System.out.println("사용중인 아이템이 아닙니다.");
@@ -94,16 +85,25 @@ class Player {
         }
     }
 
+    public int getDamage() {
+        usingItems.sort((o1, o2) -> o1.getPriority() - o2.getPriority());
+        IntUnaryOperator op = value -> value;
+        for (Item item: usingItems) {
+            op = op.andThen(item.getOp());
+        }
+        return op.applyAsInt(weapon.getWeaponAttack());
+    }
+
     void printAttack() {
         System.out.println(name + "의 현재상태");
         System.out.println("--------------------------");
+            System.out.println("장착 무기: " + weapon);
         if (usingItems.isEmpty()) {
             System.out.println("사용중인 아이템: 없음");
         } else {
             System.out.println("사용중인 아이템: " + usingItems);
         }
-        System.out.println("장착 무기: " + currentWeapon);
-        System.out.println(name + "의 공격력: " + attack);
+        System.out.println(name + "의 공격력: " + getDamage());
         System.out.println("--------------------------");
         System.out.println();
     }
@@ -119,6 +119,7 @@ public class DamageCalculation {
         player1.printAttack();
 
         player1.endItemEffect(Item.BLACK_POTION);
+        player1.takeWeapon(Weapon.BARE_HANDS);
         player1.printAttack();
     }
 }
