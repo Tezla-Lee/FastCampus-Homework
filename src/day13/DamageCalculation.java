@@ -72,22 +72,26 @@ class Player {
 
     void takeWeapon(Weapon weapon) {
         currentWeapon = weapon;
-        System.out.println(this.name + "이(가) " + weapon + "을 장착했습니다.");
+        System.out.println(this.name + "이(가) " + weapon + " 을 장착했습니다.");
+        System.out.println();
         this.attack += weapon.getWeaponAttack();
     }
 
     void useItem(Item item) {
         usingItems.add(item);
-        System.out.println(item + " 을 사용했습니다.");
+        System.out.println(this.name + "이(가) " +item + " 을 사용했습니다.");
+        System.out.println();
         this.attack = (attack + item.getAddWeaponAttack()) * (1 + item.getAddAttackPercent()) + item.getFinalAddAttack();
     }
 
     void endItemEffect(Item item) {
         if (usingItems.contains(item)) {
             usingItems.remove(item);
-            System.out.println(item + " 의 지속시간이 끝났습니다.");
+            System.out.println(this.name + "의 " +item + " 의 지속시간이 끝났습니다.");
+            System.out.println();
         } else {
             System.out.println("사용중인 아이템이 아닙니다.");
+            System.out.println();
         }
     }
 
